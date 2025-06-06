@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/flashcard.dart';
+import 'dart:math';
 
 class FlashcardScreen extends StatefulWidget {
   const FlashcardScreen({super.key});
@@ -35,6 +36,16 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
 
   int _currentIndex = 0;
   bool _isFlipped = false;
+  final Random _random = Random();
+
+  Color _getRandomColor() {
+    return Color.fromRGBO(
+      _random.nextInt(256),
+      _random.nextInt(256),
+      _random.nextInt(256),
+      1.0,
+    );
+  }
 
   void _flipCard() {
     setState(() {
@@ -76,6 +87,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
               height: 200,
               child: Card(
                 elevation: 4,
+                color: _getRandomColor(),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
