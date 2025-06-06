@@ -553,73 +553,85 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentCard = _flashcards[_currentIndex];
+    final cardColor = _getRandomColor(); // Generate color once per card
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flashcards'),
+        title: const Text('Flashcard Quiz'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // The Card display area
-            SizedBox(
-              width: 300,
-              height: 200,
+            Text(
+              'Card ${_currentIndex + 1} of ${_flashcards.length}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: _flipCard,
               child: Card(
-                elevation: 4,
-                color: _getRandomColor(),
+                color: cardColor, // Use the same color for both sides
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (_flashcards[_currentIndex].imageName != null)
-                          Image.asset(
-                            'assets/images/${_flashcards[_currentIndex].imageName!}',
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.contain,
-                          ),
-                        Text(
-                          _isFlipped
-                              ? _flashcards[_currentIndex].answer
-                              : _flashcards[_currentIndex].question,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 22),
+                  child: SizedBox(
+                    width: 300,
+                    height: 200,
+                    child: Center(
+                      child: Text(
+                        _isFlipped
+                            ? currentCard.answer
+                            : currentCard.question,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
                         ),
-                      ],
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-
+            if (currentCard.imageName != null) ...[
+              const SizedBox(height: 20),
+              Image.asset(
+                'assets/images/${currentCard.imageName}',
+                height: 200,
+                width: 300,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 20),
+            ] else ...[
+              const SizedBox(height: 20),
+              const Icon(
+                Icons.help_outline,
+                size: 100,
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 20),
+            ],
             const SizedBox(height: 20),
-
-            // Navigation buttons
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: _currentIndex > 0 ? _previousCard : null,
                   child: const Text('Previous'),
                 ),
+                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: _flipCard,
-                  child: const Text('Flip Card'),
+                  child: Text(_isFlipped ? 'Show Question' : 'Show Answer'),
                 ),
+                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: _currentIndex < _flashcards.length - 1 ? _nextCard : null,
                   child: const Text('Next'),
                 ),
               ],
             ),
-
-            const SizedBox(height: 20),
-
-            // Card counter
-            Text('Card ${_currentIndex + 1}/${_flashcards.length}'),
           ],
         ),
       ),
