@@ -79,7 +79,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: _previousCard,
+                  onPressed: _currentIndex > 0 ? _previousCard : null,
                   child: const Text('Previous'),
                 ),
                 ElevatedButton(
@@ -87,7 +87,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                   child: const Text('Flip Card'),
                 ),
                 ElevatedButton(
-                  onPressed: _nextCard,
+                  onPressed: _currentIndex < _flashcards.length - 1 ? _nextCard : null,
                   child: const Text('Next'),
                 ),
               ],
