@@ -88,25 +88,28 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
               child: Card(
                 elevation: 4,
                 color: _getRandomColor(),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (_flashcards[_currentIndex].imageName != null)
-                        Image.asset(
-                          'assets/images/${_flashcards[_currentIndex].imageName!}',
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.contain,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_flashcards[_currentIndex].imageName != null)
+                          Image.asset(
+                            'assets/images/${_flashcards[_currentIndex].imageName!}',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.contain,
+                          ),
+                        Text(
+                          _isFlipped
+                              ? _flashcards[_currentIndex].answer
+                              : _flashcards[_currentIndex].question,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 22),
                         ),
-                      Text(
-                        _isFlipped
-                            ? _flashcards[_currentIndex].answer
-                            : _flashcards[_currentIndex].question,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 22),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
