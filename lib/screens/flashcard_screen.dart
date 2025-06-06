@@ -11,10 +11,26 @@ class FlashcardScreen extends StatefulWidget {
 class _FlashcardScreenState extends State<FlashcardScreen> {
   // Hard-coded list of flashcards
   final List<Flashcard> _flashcards = [
-    Flashcard(question: "What is the capital of Japan?", answer: "Tokyo"),
-    Flashcard(question: "What language is Flutter written in?", answer: "Dart"),
-    Flashcard(question: "What is `2 + 2`?", answer: "4"),
-    Flashcard(question: "Who is the CEO of Google?", answer: "Sundar Pichai"),
+    Flashcard(
+      question: "What is the capital of Japan?",
+      answer: "Tokyo",
+      imageName: "japan.png",
+    ),
+    Flashcard(
+      question: "What language is Flutter written in?",
+      answer: "Dart",
+      imageName: "flutter.png",
+    ),
+    Flashcard(
+      question: "What is `2 + 2`?",
+      answer: "4",
+      imageName: "math.png",
+    ),
+    Flashcard(
+      question: "Who is the CEO of Google?",
+      answer: "Sundar Pichai",
+      imageName: "google.png",
+    ),
   ];
 
   int _currentIndex = 0;
@@ -61,12 +77,24 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
               child: Card(
                 elevation: 4,
                 child: Center(
-                  child: Text(
-                    _isFlipped 
-                        ? _flashcards[_currentIndex].answer 
-                        : _flashcards[_currentIndex].question,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 22),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (_flashcards[_currentIndex].imageName != null)
+                        Image.asset(
+                          'assets/images/${_flashcards[_currentIndex].imageName!}',
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.contain,
+                        ),
+                      Text(
+                        _isFlipped
+                            ? _flashcards[_currentIndex].answer
+                            : _flashcards[_currentIndex].question,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 22),
+                      ),
+                    ],
                   ),
                 ),
               ),
